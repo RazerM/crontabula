@@ -127,3 +127,9 @@ def test_minutes():
 def test_day_of_week(cron_day_of_week, py_day_of_week):
     crontab = crontabula.parse(f"0 0 * 2 {cron_day_of_week}")
     assert crontab.next.weekday() == py_day_of_week
+
+
+@pytest.mark.freeze_time("2022-12-31 23:59:59")
+def test_year():
+    crontab = crontabula.parse("0 0 * 4 *")
+    assert crontab.next == datetime.datetime(2023, 4, 1)
